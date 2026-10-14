@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mobile Parts Compatibility</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+.pm{font-family:'Public Sans',system-ui,sans-serif;color:#0F172A;-webkit-font-smoothing:antialiased}
+.pm *{box-sizing:border-box}
+.pm button,.pm input,.pm textarea{font-family:inherit}
+.pm button{cursor:pointer}
+.mm{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.btn{min-height:48px;border-radius:12px;border:1px solid #0057B8;background:#0057B8;color:#fff;font-weight:600;font-size:15px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.sec{background:#fff;color:#0057B8}
+.btn.dng{background:#B42318;border-color:#B42318}
+.btn:disabled{background:#E2E8F0;border-color:#E2E8F0;color:#64748B;cursor:not-allowed}
+.btn:active{filter:brightness(.92)}
+.card{background:#fff;border:1px solid #D9E0EA;border-radius:14px}
+.chip{display:inline-flex;align-items:center;gap:4px;min-height:24px;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.2}
+.chip.unv{background:#FFF4DB;color:#7A4100;border:1px solid #F0C36B}
+.chip.rst{background:#FFE6D1;color:#7F2E00;border:1px solid #F2A66B}
+.chip.rev{background:#EDF1F6;color:#2B3748;border:1px solid #B8C4D4}
+.chip.off{background:#EDF1F6;color:#2B3748;border:1px solid #B8C4D4}
+.ib{width:44px;height:44px;border-radius:12px;border:0;background:transparent;display:inline-flex;align-items:center;justify-content:center;color:#0F172A;flex:none}
+.ib:active{background:#E6EBF2}
+.row{display:flex;align-items:center;gap:12px;min-height:60px;padding:8px 16px;background:#fff;border:0;border-bottom:1px solid #E5EAF1;width:100%;text-align:left;font-size:15px;color:#0F172A}
+.row:active{background:#EEF3FA}
+.sw{position:relative;width:48px;height:28px;border-radius:999px;border:0;flex:none}
+.sw i{position:absolute;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .12s}
+.lab{font-size:12px;font-weight:600;color:#5B6778;letter-spacing:.04em;text-transform:uppercase;padding:16px 16px 6px}
+.pm button:focus-visible,.pm input:focus-visible,.pm textarea:focus-visible{outline:3px solid #7FB0F0;outline-offset:2px}
+.swrap{display:flex;align-items:center;gap:8px;height:52px;padding:0 4px 0 14px;border-radius:14px;background:#fff;border:1.5px solid #B8C4D4}
+.swrap:focus-within{border-color:#0057B8;box-shadow:0 0 0 3px rgba(0,87,184,.2)}
+.swrap input{flex:1;min-width:0;height:48px;border:0;outline:0 !important;background:transparent;font-size:16px;color:#0F172A}
+.fld{width:100%;border-radius:12px;border:1.5px solid #B8C4D4;background:#fff;font-size:15px;padding:12px;color:#0F172A}
+.fld:focus{border-color:#0057B8}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid #D5E3F5;border-top-color:#0057B8;animation:sp 0.9s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.mini{font-size:13px;color:#5B6778;line-height:1.45}
+</style>
+
+<style>
+html,body{margin:0;height:100%;background:#DDE3EB}
+body{display:flex;align-items:center;justify-content:center}
+#app{display:contents}
+@media (min-width:431px){#app .pm{border-radius:28px;box-shadow:0 20px 60px rgba(15,23,42,.25);border:1px solid #C3CCD8}}
+@media (max-width:430px){body{display:block;background:#F4F6F9}#app .pm{width:100vw !important;height:100vh !important;height:100dvh !important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="tpl">
+<div class="pm" style="position:relative;width:390px;height:844px;overflow:hidden;background:#F4F6F9;display:flex;flex-direction:column">
+
+<!-- Launch -->
+<sc-if value="{{showSplash}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#fff">
+<div style="width:68px;height:68px;border-radius:18px;background:#0057B8;display:flex;align-items:center;justify-content:center;color:#fff">
+<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"></rect><path d="M10.5 18.5h3"></path><path d="M10 7.5l2 2 3.2-3.2"></path></svg>
+</div>
+<div style="font-size:22px;font-weight:700">Parts Compatibility</div>
+<div class="mini" style="display:flex;align-items:center;gap:8px"><span class="spin"></span>Loading local data</div>
+</div>
+</sc-if>
+
+<sc-if value="{{booted}}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column;position:relative">
+
+<sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+<div style="background:#EDF1F6;border-bottom:1px solid #B8C4D4;padding:7px 16px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#2B3748;flex:none">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8.8a15 15 0 0120 0M5 12.5a10 10 0 0114 0M8.5 16a5 5 0 017 0"></path><circle cx="12" cy="19.5" r="1"></circle><path d="M3 3l18 18"></path></svg>
+Offline. Using downloaded data.
+</div>
+</sc-if>
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:14px 16px 12px;background:#fff;border-bottom:1px solid #E5EAF1;flex:none">
+<div style="display:flex;align-items:center;justify-content:space-between;min-height:32px">
+<div style="display:flex;align-items:center;gap:8px">
+<div style="width:28px;height:28px;border-radius:8px;background:#0057B8;color:#fff;display:flex;align-items:center;justify-content:center">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.2"></rect><path d="M10 7.5l2 2 3.2-3.2"></path></svg>
+</div>
+<span style="font-weight:700;font-size:15px;color:#0057B8">Parts Compatibility</span>
+</div>
+<sc-if value="{{updAvail}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{toUpdate}}" aria-label="Dataset update available. Open update screen" style="min-height:36px;border-radius:999px;border:1px solid #0057B8;background:#E6F0FB;color:#0057B8;font-weight:600;font-size:12px;padding:0 12px">Update available</button>
+</sc-if>
+</div>
+<h1 style="margin:8px 0 12px;font-size:22px;line-height:1.2;font-weight:700">Find Compatible Displays</h1>
+<div class="swrap">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+<input type="text" ref="{{inputRef}}" aria-label="Search phone model or brand" placeholder="Search phone model or brand" value="{{query}}" onChange="{{onQuery}}" autocomplete="off" autocapitalize="none" spellcheck="false">
+<sc-if value="{{hasQuery}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="ib" onClick="{{clearQuery}}" aria-label="Clear search text"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</sc-if>
+</div>
+</div>
+
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 20px">
+
+<sc-if value="{{qEmpty}}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="font-size:15px;color:#334155;margin-bottom:12px">Search a phone to find compatible displays</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<button type="button" onClick="{{toFavs}}" class="card" style="min-height:76px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:#0F172A">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0057B8" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg>Favorites</button>
+<button type="button" onClick="{{toHist}}" class="card" style="min-height:76px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:#0F172A">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0057B8" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Recent</button>
+<button type="button" onClick="{{toUpdate}}" class="card" style="min-height:76px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:#0F172A">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0057B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"></path></svg>Updates</button>
+</div>
+
+<div class="lab" style="padding-left:0">Recent searches</div>
+<sc-if value="{{hasRecent}}" hint-placeholder-val="{{ true }}">
+<div class="card" style="overflow:hidden">
+<sc-for list="{{recents}}" as="r" hint-placeholder-count="2">
+<button type="button" class="row" onClick="{{r.open}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{r.brand}}</span><span style="display:block;font-weight:600;overflow-wrap:anywhere">{{r.name}}</span></span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{noRecent}}" hint-placeholder-val="{{ false }}">
+<div class="mini">No recent searches yet. They stay on this device.</div>
+</sc-if>
+
+<div style="margin-top:18px;border:1.5px dashed #B8C4D4;border-radius:14px;padding:12px">
+<div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#5B6778">PROTOTYPE ONLY · TRY A SEARCH</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+<sc-for list="{{hints}}" as="h" hint-placeholder-count="4">
+<button type="button" onClick="{{h.pick}}" style="min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #B8C4D4;background:#fff;font-size:14px;font-weight:600;color:#0057B8">{{h.label}}</button>
+</sc-for>
+</div>
+<div class="mini" style="margin-top:8px">Real dataset: 88 groups, 449 models. All records are unverified.</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{qShort}}" hint-placeholder-val="{{ false }}">
+<div class="mini" style="padding:8px 2px">Keep typing. Suggestions appear after two characters.</div>
+</sc-if>
+
+<sc-if value="{{hasMatches}}" hint-placeholder-val="{{ false }}">
+<div>
+<div class="card" style="overflow:hidden">
+<sc-for list="{{sugg}}" as="m" hint-placeholder-count="3">
+<sc-if value="{{m.hasHeader}}" hint-placeholder-val="{{ false }}"><div style="padding:9px 16px 6px;font-size:13px;font-weight:700;color:#334155;background:#F4F6F9;border-bottom:1px solid #E5EAF1">{{m.header}}</div></sc-if>
+<button type="button" class="row" onClick="{{m.open}}" aria-label="{{m.aria}}">
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{m.brand}}</span><span style="display:block;font-size:16px;overflow-wrap:anywhere"><span>{{m.pre}}</span><b style="background:#DCEAFB;color:#003A7A">{{m.mid}}</b><span>{{m.post}}</span></span></span>
+<span style="font-size:12px;font-weight:600;color:{{m.tagColor}};text-align:right;flex:none">{{m.tag}}</span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{hasMore}}" hint-placeholder-val="{{ false }}"><button type="button" class="btn sec" style="width:100%;margin-top:10px" onClick="{{showAllFn}}">Show all {{matchCount}} matches</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{noMatch}}" hint-placeholder-val="{{ false }}">
+<div>
+<sc-if value="{{hasFuzzy}}" hint-placeholder-val="{{ false }}">
+<div style="margin-bottom:14px">
+<div style="font-size:14px;font-weight:600;color:#334155;margin:0 2px 8px">Closest names. None match exactly.</div>
+<div class="card" style="overflow:hidden">
+<sc-for list="{{fz}}" as="m" hint-placeholder-count="2">
+<button type="button" class="row" onClick="{{m.open}}" aria-label="{{m.aria}}">
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{m.brand}}</span><span style="display:block;font-size:16px;overflow-wrap:anywhere">{{m.name}}</span></span>
+<span style="font-size:12px;font-weight:600;color:#004A99;flex:none">{{m.tag}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<div class="card" style="padding:20px 16px;text-align:center">
+<div style="font-size:17px;font-weight:700">No matching models found.</div>
+<div class="mini" style="margin-top:6px">Check the spelling or try fewer words. Missing a model? You can report it.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:16px">
+<button type="button" class="btn" onClick="{{editSearch}}">Edit search</button>
+<button type="button" class="btn sec" onClick="{{clearQuery}}">Clear search</button>
+<button type="button" class="btn sec" onClick="{{reportMissingModel}}">Report a missing model</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<!-- ============ RESULTS ============ -->
+<sc-if value="{{isResults}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:8px 8px 10px;background:#fff;border-bottom:1px solid #E5EAF1;display:flex;align-items:center;gap:4px;flex:none">
+<button type="button" class="ib" onClick="{{goBack}}" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="flex:1;min-width:0">
+<div style="font-size:12px;color:#5B6778">{{model.brand}}</div>
+<div style="font-size:18px;font-weight:700;line-height:1.2;overflow-wrap:anywhere">{{model.name}}</div>
+</div>
+<button type="button" class="ib" onClick="{{favModelToggle}}" aria-label="{{favModelLabel}}" aria-pressed="{{favModelOn}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="{{favModelFill}}" stroke="{{favModelStroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg></button>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 24px">
+<sc-if value="{{hasGroups}}" hint-placeholder-val="{{ true }}">
+<div>
+<h2 style="font-size:16px;margin:0 0 4px;font-weight:700">Compatible display models</h2>
+<div class="mini" style="margin-bottom:12px">{{groupCountLabel}}</div>
+<sc-for list="{{gcards}}" as="g" hint-placeholder-count="2">
+<div class="card" style="padding:14px;margin-bottom:12px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+<span style="font-size:13px;font-weight:600;color:#334155">Display / LCD</span>
+<span class="mm" style="font-size:12px;color:#5B6778">{{g.ref}}</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+<sc-if value="{{g.isUnv}}" hint-placeholder-val="{{ true }}"><span class="chip unv">Unverified</span></sc-if>
+<sc-if value="{{g.isReview}}" hint-placeholder-val="{{ false }}"><span class="chip rev">Needs review</span></sc-if>
+<sc-if value="{{g.hasRestr}}" hint-placeholder-val="{{ false }}"><span class="chip rst">Restricted: {{g.restr}}</span></sc-if>
+</div>
+<div style="font-size:15px;margin-top:10px;font-weight:600">{{g.count}} models in this group</div>
+<div class="mini" style="margin-top:2px;overflow-wrap:anywhere">{{g.preview}}</div>
+<sc-if value="{{g.hasRestr}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:10px;background:#FFF4DB;border:1px solid #F0C36B;border-radius:10px;padding:8px 10px;font-size:13px;color:#7A4100;font-weight:600">Source note: {{g.restrNote}}</div>
+</sc-if>
+<sc-if value="{{g.isReview}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:10px;background:#EDF1F6;border:1px solid #B8C4D4;border-radius:10px;padding:8px 10px;font-size:13px;color:#2B3748;font-weight:600">{{g.reviewText}}</div>
+</sc-if>
+<button type="button" class="btn" style="width:100%;margin-top:12px" onClick="{{g.open}}">View all {{g.count}} models</button>
+</div>
+</sc-for>
+<div class="mini">Models are listed together in the source data. This is not confirmation that parts are physically interchangeable.</div>
+<button type="button" class="btn sec" style="width:100%;margin-top:14px" onClick="{{reportFromResults}}">Report incorrect or missing info</button>
+</div>
+</sc-if>
+<sc-if value="{{noGroups}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding:20px 16px;text-align:center">
+<div style="font-size:17px;font-weight:700">No compatibility group is available for this model yet.</div>
+<div class="mini" style="margin-top:6px">This model is in our database, but no compatibility group is available yet. That does not mean no replacement exists in the real world.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:16px">
+<button type="button" class="btn" onClick="{{searchAnother}}">Search another model</button>
+<button type="button" class="btn sec" onClick="{{reportMissingGroup}}">Report missing compatibility info</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ GROUP ============ -->
+<sc-if value="{{isGroup}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:8px 8px 10px;background:#fff;border-bottom:1px solid #E5EAF1;display:flex;align-items:center;gap:4px;flex:none">
+<button type="button" class="ib" onClick="{{goBack}}" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="flex:1;min-width:0;font-size:18px;font-weight:700">Compatibility group</div>
+<button type="button" class="ib" onClick="{{favGroupToggle}}" aria-label="{{favGroupLabel}}" aria-pressed="{{favGroupOn}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="{{favGroupFill}}" stroke="{{favGroupStroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg></button>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 24px">
+<div class="card" style="padding:14px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<span class="mm" style="font-size:14px">{{group.ref}}</span>
+<span style="font-size:13px;font-weight:600;color:#334155">Display / LCD</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+<sc-if value="{{group.isUnv}}" hint-placeholder-val="{{ true }}"><span class="chip unv">Unverified</span></sc-if>
+<sc-if value="{{group.isReview}}" hint-placeholder-val="{{ false }}"><span class="chip rev">Needs review</span></sc-if>
+<sc-if value="{{group.hasRestr}}" hint-placeholder-val="{{ false }}"><span class="chip rst">Restricted: {{group.restr}}</span></sc-if>
+</div>
+<sc-if value="{{group.hasRestr}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:10px;background:#FFF4DB;border:1px solid #F0C36B;border-radius:10px;padding:8px 10px;font-size:13px;color:#7A4100;font-weight:600">Source note: {{group.restrNote}}</div>
+</sc-if>
+<sc-if value="{{group.isReview}}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:10px;background:#EDF1F6;border:1px solid #B8C4D4;border-radius:10px;padding:8px 10px;font-size:13px;color:#2B3748;font-weight:600">{{group.reviewText}}</div>
+</sc-if>
+<div class="mini" style="margin-top:10px">This listing comes from a supplied source list and has not been independently confirmed. Check the part before you rely on it.</div>
+<div class="mini" style="margin-top:6px">Dataset {{dsVer}} · {{group.sid}}</div>
+</div>
+
+<sc-if value="{{hasCurrent}}" hint-placeholder-val="{{ true }}">
+<div class="lab" style="padding-left:0">You searched</div>
+<div style="background:#E6F0FB;border:1.5px solid #0057B8;border-radius:14px;padding:12px 14px">
+<div style="font-size:12px;color:#334155">{{current.brand}}</div>
+<div style="font-size:17px;font-weight:700;overflow-wrap:anywhere">{{current.name}}</div>
+</div>
+</sc-if>
+
+<div class="lab" style="padding-left:0">Listed in the same compatibility group ({{othersLabel}})</div>
+<sc-if value="{{showGroupSearch}}" hint-placeholder-val="{{ false }}">
+<div class="swrap" style="height:48px;margin-bottom:10px">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+<input type="text" aria-label="Search within this group" placeholder="Search within this group" value="{{gq}}" onChange="{{onGq}}" autocomplete="off" autocapitalize="none" spellcheck="false" style="font-size:15px">
+<sc-if value="{{gq}}" hint-placeholder-val="{{ false }}"><button type="button" class="ib" onClick="{{clearGq}}" aria-label="Clear group search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{gqNone}}" hint-placeholder-val="{{ false }}"><div class="mini" style="padding:6px 2px">No model in this group matches your search.</div></sc-if>
+<div class="card" style="overflow:hidden">
+<sc-for list="{{others}}" as="o" hint-placeholder-count="3">
+<sc-if value="{{o.incomplete}}" hint-placeholder-val="{{ false }}"><div style="padding:12px 16px;background:#F4F6F9;border-bottom:1px solid #E5EAF1"><span class="chip rev">Incomplete entry</span><div class="mini" style="margin-top:4px">The source list has "{{o.name}}" with no model name. It can't be searched.</div></div></sc-if>
+<sc-if value="{{o.normal}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="row" onClick="{{o.open}}">
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{o.brand}}</span><span style="display:block;font-size:16px;font-weight:600;overflow-wrap:anywhere">{{o.name}}</span></span>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</sc-if>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px">
+<button type="button" class="btn sec" onClick="{{copyGroup}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V6a2 2 0 012-2h9"></path></svg>Copy summary</button>
+<button type="button" class="btn sec" onClick="{{reportFromGroup}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"></path></svg>Report issue</button>
+</div>
+<div class="mini" style="margin-top:8px">The copied summary keeps the verification status and any restriction.</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ FAVORITES ============ -->
+<sc-if value="{{isFavs}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:16px 16px 12px;background:#fff;border-bottom:1px solid #E5EAF1;flex:none">
+<h1 style="margin:0 0 10px;font-size:22px;font-weight:700">Favorites</h1>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;background:#EDF1F6;border-radius:12px;padding:4px">
+<button type="button" onClick="{{favTabModels}}" aria-pressed="{{favTabIsModels}}" style="min-height:44px;border-radius:9px;border:0;font-weight:600;font-size:14px;background:{{ftm.bg}};color:{{ftm.color}}">Models ({{favModelCount}})</button>
+<button type="button" onClick="{{favTabGroups}}" aria-pressed="{{favTabIsGroups}}" style="min-height:44px;border-radius:9px;border:0;font-weight:600;font-size:14px;background:{{ftg.bg}};color:{{ftg.color}}">Groups ({{favGroupCount}})</button>
+</div>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 20px">
+<sc-if value="{{showFavModels}}" hint-placeholder-val="{{ true }}">
+<div>
+<sc-if value="{{hasFavModels}}" hint-placeholder-val="{{ true }}">
+<div class="card" style="overflow:hidden">
+<sc-for list="{{favModels}}" as="f" hint-placeholder-count="2">
+<div style="display:flex;align-items:center;border-bottom:1px solid #E5EAF1;background:#fff">
+<button type="button" class="row" style="border-bottom:0;flex:1;min-width:0" onClick="{{f.open}}">
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{f.brand}}</span><span style="display:block;font-size:16px;font-weight:600;overflow-wrap:anywhere">{{f.name}}</span><span style="display:block;font-size:12px;color:#5B6778;margin-top:2px">{{f.tag}}</span></span>
+</button>
+<button type="button" class="ib" style="margin-right:6px" onClick="{{f.remove}}" aria-label="{{f.removeLabel}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0057B8" stroke="#0057B8" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg></button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{noFavModels}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding:24px 16px;text-align:center">
+<div style="font-size:17px;font-weight:700">No favorite models yet</div>
+<div class="mini" style="margin-top:6px">Tap the star on a model to keep it here, even offline.</div>
+<button type="button" class="btn" style="margin-top:16px" onClick="{{toHomeSearch}}">Search models</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{showFavGroups}}" hint-placeholder-val="{{ false }}">
+<div>
+<sc-if value="{{hasFavGroups}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="overflow:hidden">
+<sc-for list="{{favGroups}}" as="f" hint-placeholder-count="1">
+<div style="display:flex;align-items:center;border-bottom:1px solid #E5EAF1;background:#fff">
+<button type="button" class="row" style="border-bottom:0;flex:1;min-width:0" onClick="{{f.open}}">
+<span style="flex:1;min-width:0"><span class="mm" style="display:block;font-size:14px">{{f.ref}}</span><span style="display:block;font-size:13px;color:#334155;margin-top:2px">Display / LCD · {{f.count}} models</span><span style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><span class="chip unv">{{f.statusLabel}}</span><sc-if value="{{f.hasRestr}}" hint-placeholder-val="{{ false }}"><span class="chip rst">{{f.restr}}</span></sc-if></span></span>
+</button>
+<button type="button" class="ib" style="margin-right:6px" onClick="{{f.remove}}" aria-label="{{f.removeLabel}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0057B8" stroke="#0057B8" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg></button>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{noFavGroups}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding:24px 16px;text-align:center">
+<div style="font-size:17px;font-weight:700">No favorite groups yet</div>
+<div class="mini" style="margin-top:6px">Open a compatibility group and tap the star to save it.</div>
+<button type="button" class="btn" style="margin-top:16px" onClick="{{toHomeSearch}}">Search models</button>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ HISTORY ============ -->
+<sc-if value="{{isHist}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:16px 8px 12px 16px;background:#fff;border-bottom:1px solid #E5EAF1;flex:none;display:flex;align-items:center;justify-content:space-between">
+<h1 style="margin:0;font-size:22px;font-weight:700">Search history</h1>
+<sc-if value="{{hasHist}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{askClear}}" style="min-height:44px;padding:0 12px;border:0;background:transparent;color:#B42318;font-weight:600;font-size:14px">Clear all</button>
+</sc-if>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 20px">
+<sc-if value="{{hasHist}}" hint-placeholder-val="{{ true }}">
+<div>
+<div class="mini" style="margin-bottom:8px">Stored on this device only.</div>
+<div class="card" style="overflow:hidden">
+<sc-for list="{{histItems}}" as="h" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;border-bottom:1px solid #E5EAF1;background:#fff">
+<button type="button" class="row" style="border-bottom:0;flex:1;min-width:0" onClick="{{h.open}}" aria-label="{{h.aria}}">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span style="flex:1;min-width:0"><span style="display:block;font-size:12px;color:#5B6778">{{h.brand}}</span><span style="display:block;font-size:16px;font-weight:600;overflow-wrap:anywhere">{{h.name}}</span></span>
+</button>
+<button type="button" class="ib" style="margin-right:6px" onClick="{{h.remove}}" aria-label="{{h.removeLabel}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{noHist}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="padding:24px 16px;text-align:center">
+<div style="font-size:17px;font-weight:700">No searches yet</div>
+<div class="mini" style="margin-top:6px">Models you open will show up here so you can get back to them fast.</div>
+<button type="button" class="btn" style="margin-top:16px" onClick="{{toHomeSearch}}">Search models</button>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ SETTINGS ============ -->
+<sc-if value="{{isSettings}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:16px;background:#fff;border-bottom:1px solid #E5EAF1;flex:none"><h1 style="margin:0;font-size:22px;font-weight:700">Settings</h1></div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding-bottom:20px">
+<div class="lab">Application</div>
+<div class="card" style="margin:0 16px;padding:4px 14px">
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E5EAF1;font-size:14px"><span>App version</span><span style="color:#5B6778">0.1.0 (build 1), prototype</span></div>
+<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E5EAF1;font-size:14px"><span>Dataset version</span><span style="color:#5B6778">{{dsVer}}</span></div>
+<div style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:14px"><span>Last update</span><span style="color:#5B6778;text-align:right">{{dsWhen}}</span></div>
+</div>
+<div class="mini" style="margin:8px 16px 0">All records come from a supplied source list and are shown as Unverified until they are independently reviewed.</div>
+
+<div class="lab">Data and connectivity</div>
+<div class="card" style="margin:0 16px;overflow:hidden">
+<button type="button" class="row" onClick="{{toUpdate}}"><span style="flex:1">Check for dataset updates</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+<div class="row" style="cursor:default"><span style="flex:1"><span style="display:block">Simulate offline</span><span class="mini" style="display:block">Prototype only. Search keeps working offline.</span></span>
+<button type="button" class="sw" role="switch" aria-checked="{{offline}}" aria-label="Simulate offline mode" onClick="{{toggleOffline}}" style="background:{{swBg}}"><i style="left:{{swLeft}}"></i></button></div>
+</div>
+
+<div class="lab">Preferences</div>
+<div class="card" style="margin:0 16px;overflow:hidden">
+<div class="row" style="cursor:default"><span style="flex:1">Theme</span><span style="color:#5B6778;font-size:14px">Light</span></div>
+<button type="button" class="row" onClick="{{askClear}}"><span style="flex:1;color:#B42318;font-weight:600">Clear search history</span></button>
+</div>
+
+<div class="lab">Support</div>
+<div class="card" style="margin:0 16px;overflow:hidden">
+<button type="button" class="row" onClick="{{toHelp}}"><span style="flex:1">Help and FAQ</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+<button type="button" class="row" onClick="{{reportFromSettings}}"><span style="flex:1">Report an issue</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B6778" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+
+<div class="lab">Legal</div>
+<div class="card" style="margin:0 16px;overflow:hidden">
+<button type="button" class="row" onClick="{{legalToast}}"><span style="flex:1">Privacy policy</span></button>
+<button type="button" class="row" onClick="{{legalToast}}"><span style="flex:1">Open-source acknowledgements</span></button>
+</div>
+<div class="mini" style="margin:12px 16px 0">Optional accounts and cross-device sync are planned for a later version. Search never needs an account.</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ UPDATE ============ -->
+<sc-if value="{{isUpdate}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:8px 8px 10px;background:#fff;border-bottom:1px solid #E5EAF1;display:flex;align-items:center;gap:4px;flex:none">
+<button type="button" class="ib" onClick="{{goBack}}" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="flex:1;font-size:18px;font-weight:700">Dataset updates</div>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 24px">
+<div class="card" style="padding:14px">
+<div style="display:flex;justify-content:space-between;font-size:14px;padding-bottom:8px;border-bottom:1px solid #E5EAF1"><span>Current dataset</span><span style="font-weight:600">{{dsVer}}</span></div>
+<div style="display:flex;justify-content:space-between;gap:12px;font-size:14px;padding-top:8px"><span>Last update</span><span style="color:#5B6778;text-align:right">{{dsWhen}}</span></div>
+</div>
+
+<div class="card" style="padding:16px;margin-top:12px">
+<sc-if value="{{ui.idle}}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="font-size:16px;font-weight:700">Check for new data</div>
+<div class="mini" style="margin-top:4px">Search keeps working offline. Updates only add or correct records.</div>
+<button type="button" class="btn" style="width:100%;margin-top:14px" onClick="{{checkUpdates}}">Check for updates</button>
+</div>
+</sc-if>
+<sc-if value="{{ui.checking}}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:12px"><span class="spin"></span><div><div style="font-size:16px;font-weight:700">Checking for updates</div><div class="mini">You can keep using the app.</div></div></div>
+</sc-if>
+<sc-if value="{{ui.available}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700">A new compatibility dataset is available.</div>
+<div class="mini" style="margin-top:4px">New version: v2 (prototype). Your current data stays in use until the new set is checked.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+<button type="button" class="btn" onClick="{{downloadUpdate}}">Download update</button>
+<button type="button" class="btn sec" onClick="{{resetUpd}}">Not now</button>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ui.downloading}}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:12px"><span class="spin"></span><div><div style="font-size:16px;font-weight:700">Downloading</div><div class="mini">Progress isn't available for this download. You can leave this screen.</div></div></div>
+</sc-if>
+<sc-if value="{{ui.validating}}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:12px"><span class="spin"></span><div><div style="font-size:16px;font-weight:700">Validating new data</div><div class="mini">Your existing dataset isn't replaced until this passes.</div></div></div>
+</sc-if>
+<sc-if value="{{ui.success}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700;color:#14612F">Update complete.</div>
+<div class="mini" style="margin-top:4px">Now using dataset v2 (prototype).</div>
+<button type="button" class="btn" style="width:100%;margin-top:14px" onClick="{{resetUpd}}">Done</button>
+</div>
+</sc-if>
+<sc-if value="{{ui.uptodate}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700">Your compatibility data is up to date.</div>
+<button type="button" class="btn sec" style="width:100%;margin-top:14px" onClick="{{resetUpd}}">OK</button>
+</div>
+</sc-if>
+<sc-if value="{{ui.offline}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700">You are offline. You can continue using your downloaded data.</div>
+<button type="button" class="btn" style="width:100%;margin-top:14px" onClick="{{checkUpdates}}">Try again</button>
+</div>
+</sc-if>
+<sc-if value="{{ui.failed}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700;color:#B42318">Update failed. Your existing data is still available.</div>
+<button type="button" class="btn" style="width:100%;margin-top:14px" onClick="{{checkUpdates}}">Retry</button>
+</div>
+</sc-if>
+<sc-if value="{{ui.invalid}}" hint-placeholder-val="{{ false }}">
+<div>
+<div style="font-size:16px;font-weight:700;color:#B42318">The new dataset didn't pass validation.</div>
+<div class="mini" style="margin-top:4px">It was discarded. Your existing data is still in use.</div>
+<button type="button" class="btn" style="width:100%;margin-top:14px" onClick="{{checkUpdates}}">Retry</button>
+</div>
+</sc-if>
+</div>
+
+<div style="margin-top:14px;border:1.5px dashed #B8C4D4;border-radius:14px;padding:12px">
+<div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:#5B6778">PROTOTYPE ONLY · NEXT CHECK SHOULD…</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+<sc-for list="{{scenarios}}" as="sc" hint-placeholder-count="4">
+<button type="button" onClick="{{sc.pick}}" aria-pressed="{{sc.sel}}" style="min-height:40px;padding:0 12px;border-radius:999px;border:1.5px solid {{sc.border}};background:{{sc.bg}};font-size:13px;font-weight:600;color:{{sc.color}}">{{sc.label}}</button>
+</sc-for>
+</div>
+<div class="mini" style="margin-top:8px">No live service is contacted. These are simulated results.</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ HELP ============ -->
+<sc-if value="{{isHelp}}" hint-placeholder-val="{{ false }}">
+<div style="flex:1;min-height:0;display:flex;flex-direction:column">
+<div style="padding:8px 8px 10px;background:#fff;border-bottom:1px solid #E5EAF1;display:flex;align-items:center;gap:4px;flex:none">
+<button type="button" class="ib" onClick="{{goBack}}" aria-label="Back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<div style="flex:1;font-size:18px;font-weight:700">Help and FAQ</div>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px 24px">
+<div class="card" style="overflow:hidden">
+<sc-for list="{{faqs}}" as="f" hint-placeholder-count="4">
+<div style="border-bottom:1px solid #E5EAF1">
+<button type="button" class="row" style="border-bottom:0;min-height:56px" onClick="{{f.toggle}}" aria-expanded="{{f.open}}"><span style="flex:1;font-weight:600">{{f.q}}</span><span style="font-size:20px;color:#5B6778;width:20px;text-align:center">{{f.sign}}</span></button>
+<sc-if value="{{f.open}}" hint-placeholder-val="{{ false }}"><div style="padding:0 16px 14px;font-size:14px;line-height:1.5;color:#334155;background:#fff">{{f.a}}</div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- ============ BOTTOM NAV ============ -->
+<sc-if value="{{showNav}}" hint-placeholder-val="{{ true }}">
+<div style="flex:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:#fff;border-top:1px solid #D9E0EA;padding:6px 6px 10px;gap:4px">
+<button type="button" onClick="{{tabHome}}" aria-label="Home, search" aria-current="{{nav.home.cur}}" style="min-height:56px;border:0;border-radius:12px;background:{{nav.home.bg}};color:{{nav.home.color}};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>Search</button>
+<button type="button" onClick="{{tabFavs}}" aria-label="Favorites" aria-current="{{nav.favs.cur}}" style="min-height:56px;border:0;border-radius:12px;background:{{nav.favs.bg}};color:{{nav.favs.color}};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.5 6.6 20.4l1-6.1L3.2 10l6.1-.9z"></path></svg>Favorites</button>
+<button type="button" onClick="{{tabHist}}" aria-label="Search history" aria-current="{{nav.hist.cur}}" style="min-height:56px;border:0;border-radius:12px;background:{{nav.hist.bg}};color:{{nav.hist.color}};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>History</button>
+<button type="button" onClick="{{tabSettings}}" aria-label="Settings" aria-current="{{nav.set.cur}}" style="min-height:56px;border:0;border-radius:12px;background:{{nav.set.bg}};color:{{nav.set.color}};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Settings</button>
+</div>
+</sc-if>
+
+<!-- ============ SHEETS ============ -->
+<sc-if value="{{sheetOpen}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background:rgba(15,23,42,.5);display:flex;flex-direction:column;justify-content:flex-end">
+<button type="button" onClick="{{closeSheet}}" aria-label="Dismiss" style="flex:1;border:0;background:transparent;min-height:40px"></button>
+
+<sc-if value="{{sheetReport}}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border-radius:20px 20px 0 0;max-height:720px;overflow-y:auto;padding:8px 16px 20px">
+<div style="width:40px;height:4px;border-radius:2px;background:#CBD5E1;margin:4px auto 10px"></div>
+
+<sc-if value="{{rIsSuccess}}" hint-placeholder-val="{{ false }}">
+<div style="padding:8px 0 4px">
+<div style="font-size:18px;font-weight:700;color:#14612F">Report received (prototype)</div>
+<div class="mini" style="margin-top:6px">Nothing was sent. In the live app, an administrator reviews every report before any compatibility data changes. A report is not an instant correction.</div>
+<button type="button" class="btn" style="width:100%;margin-top:16px" onClick="{{doneReport}}">Done</button>
+</div>
+</sc-if>
+
+<sc-if value="{{rShowForm}}" hint-placeholder-val="{{ true }}">
+<div>
+<div style="display:flex;align-items:center;justify-content:space-between">
+<h2 style="margin:0;font-size:18px;font-weight:700">Report an issue</h2>
+<button type="button" class="ib" onClick="{{closeSheet}}" aria-label="Close report form"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div class="mini" style="margin-bottom:10px">Prototype: submitting does not contact a live service. Real reports need an internet connection.</div>
+
+<sc-if value="{{offline}}" hint-placeholder-val="{{ false }}">
+<div style="background:#EDF1F6;border:1px solid #B8C4D4;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:#2B3748;margin-bottom:10px">You are offline. Reporting needs an internet connection. Your text is kept here.</div>
+</sc-if>
+<sc-if value="{{rIsError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="background:#FDECEA;border:1px solid #F1A9A2;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:#8E1B12;margin-bottom:10px">Couldn't submit. Check your connection and retry. Your text is kept.</div>
+</sc-if>
+
+<div style="font-size:13px;font-weight:600;color:#334155;margin-bottom:6px">Issue type (required)</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{rTypes}}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.sel}}" style="min-height:44px;padding:0 12px;border-radius:12px;border:1.5px solid {{t.border}};background:{{t.bg}};font-size:13px;font-weight:600;color:{{t.color}};text-align:left">{{t.label}}</button>
+</sc-for>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px">
+<div style="background:#F4F6F9;border-radius:10px;padding:8px 10px"><div style="font-size:11px;color:#5B6778;font-weight:600">PHONE MODEL</div><div style="font-size:13px;font-weight:600;overflow-wrap:anywhere">{{rModel}}</div></div>
+<div style="background:#F4F6F9;border-radius:10px;padding:8px 10px"><div style="font-size:11px;color:#5B6778;font-weight:600">GROUP</div><div style="font-size:13px;font-weight:600;overflow-wrap:anywhere">{{rGroup}}</div></div>
+</div>
+
+<label for="affected" style="display:block;font-size:13px;font-weight:600;color:#334155;margin:12px 0 6px">Affected model (optional)</label>
+<input id="affected" class="fld" type="text" value="{{rAffected}}" onChange="{{onAffected}}" placeholder="Model name">
+
+<label for="desc" style="display:block;font-size:13px;font-weight:600;color:#334155;margin:12px 0 6px">What is wrong? (required)</label>
+<textarea id="desc" class="fld" rows="4" value="{{rText}}" onChange="{{onDesc}}" placeholder="Describe the issue, at least 10 characters" style="resize:none;border-color:{{rDescBorder}}"></textarea>
+<div style="display:flex;justify-content:space-between;margin-top:4px;font-size:12px">
+<span style="color:#B42318;font-weight:600">{{rDescError}}</span>
+<span style="color:#5B6778">{{rCount}}/500</span>
+</div>
+
+<button type="button" class="btn" style="width:100%;margin-top:12px" disabled="{{rDisabled}}" onClick="{{submitReport}}">{{rBtnLabel}}</button>
+<label style="display:flex;align-items:center;gap:10px;margin-top:12px;font-size:12px;color:#5B6778;min-height:32px"><input type="checkbox" checked="{{rSimFail}}" onChange="{{toggleSimFail}}" style="width:18px;height:18px">Prototype: simulate a network error on submit</label>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{sheetClear}}" hint-placeholder-val="{{ false }}">
+<div style="background:#fff;border-radius:20px 20px 0 0;padding:12px 16px 24px">
+<div style="width:40px;height:4px;border-radius:2px;background:#CBD5E1;margin:0 auto 12px"></div>
+<h2 style="margin:0;font-size:18px;font-weight:700">Clear all search history?</h2>
+<div class="mini" style="margin-top:6px">This removes {{histCount}} saved searches from this device. Favorites and compatibility data are not affected.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:16px">
+<button type="button" class="btn dng" onClick="{{confirmClear}}">Clear history</button>
+<button type="button" class="btn sec" onClick="{{closeSheet}}">Cancel</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- ============ TOAST ============ -->
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" aria-live="polite" style="position:absolute;left:16px;right:16px;bottom:{{toastBottom}}px;background:#0F172A;color:#fff;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:600;text-align:center;box-shadow:0 6px 20px rgba(15,23,42,.3)">{{toast}}</div>
+</sc-if>
+
+</div>
+</sc-if>
+</div>
+</template>
+<script>
+
+const HOLE=/\{\{\s*([^}]+?)\s*\}\}/g, WHOLE=/^\s*\{\{\s*([^}]+?)\s*\}\}\s*$/, XH='http://www.w3.org/1999/xhtml';
+class DCLogic{constructor(p){this.props=p||{};this.state={};}
+ setState(p){Object.assign(this.state,typeof p==='function'?p(this.state):p);schedule();}
+ forceUpdate(){schedule();}}
+function lk(sc,path){path=path.trim();if(path==='true')return true;if(path==='false')return false;if(/^-?\d+(\.\d+)?$/.test(path))return +path;
+ const ps=path.split('.');let v=sc[ps[0]];for(let i=1;i<ps.length&&v!=null;i++)v=v[ps[i]];return v;}
+function ev(s,sc){const m=WHOLE.exec(s);if(m)return lk(sc,m[1]);return s.replace(HOLE,(x,p)=>{const v=lk(sc,p);return v==null?'':String(v)});}
+function kids(n,sc,out){Array.from(n.childNodes).forEach(c=>build(c,sc,out));}
+function build(n,sc,out){
+ if(n.nodeType===3){out.appendChild(document.createTextNode(n.nodeValue.replace(HOLE,(x,p)=>{const v=lk(sc,p);return v==null?'':String(v)})));return;}
+ if(n.nodeType!==1)return;
+ const tag=n.localName;
+ if(tag==='sc-if'){if(ev(n.getAttribute('value')||'',sc))kids(n,sc,out);return;}
+ if(tag==='sc-for'){const list=ev(n.getAttribute('list'),sc)||[],as=n.getAttribute('as');
+  list.forEach((it,i)=>{const s2=Object.create(sc);s2[as]=it;s2.$index=i;kids(n,s2,out);});return;}
+ const ns=n.namespaceURI,html=ns===XH;
+ const el=html?document.createElement(tag):document.createElementNS(ns,tag);
+ const isCheck=n.getAttribute('type')==='checkbox',isField=html&&(tag==='input'||tag==='textarea');
+ for(const a of Array.from(n.attributes)){
+  const name=a.name;if(name.indexOf('hint-')===0)continue;
+  if(name==='ref'){el.__ref=ev(a.value,sc);continue;}
+  if(html&&/^on/.test(name)){const fn=ev(a.value,sc);if(typeof fn!=='function')continue;
+   const k=(name==='onchange'&&!isCheck)?'oninput':name;el[k]=fn;continue;}
+  const v=ev(a.value,sc);
+  if(isField&&name==='value'){el.__val=v==null?'':String(v);el.value=el.__val;continue;}
+  if(isField&&name==='checked'){el.__chk=!!v;el.checked=!!v;continue;}
+  if(name==='disabled'){if(v)el.setAttribute('disabled','');continue;}
+  if(v===false||v==null){if(name.indexOf('aria-')===0)el.setAttribute(name,'false');continue;}
+  el.setAttribute(name,String(v));
+ }
+ if(!isField)kids(n,sc,el);
+ out.appendChild(el);
+}
+function refs(n){if(n.__ref)n.__ref(n);n.childNodes&&n.childNodes.forEach(refs);}
+function morph(live,nw){
+ if(live.nodeType===3){if(live.nodeValue!==nw.nodeValue)live.nodeValue=nw.nodeValue;return;}
+ Array.from(live.attributes).forEach(a=>{if(!nw.hasAttribute(a.name))live.removeAttribute(a.name);});
+ Array.from(nw.attributes).forEach(a=>{if(live.getAttribute(a.name)!==a.value)live.setAttribute(a.name,a.value);});
+ ['onclick','oninput','onchange'].forEach(k=>{live[k]=nw[k]||null;});
+ if(nw.__ref)nw.__ref(live);
+ if(live.tagName==='INPUT'||live.tagName==='TEXTAREA'){
+  if(nw.__val!==undefined&&live.value!==nw.__val)live.value=nw.__val;
+  if(nw.__chk!==undefined&&live.checked!==nw.__chk)live.checked=nw.__chk;return;}
+ const nc=Array.from(nw.childNodes);let lc=live.childNodes;
+ for(let i=0;i<nc.length;i++){
+  const l=lc[i];
+  if(!l){live.appendChild(nc[i]);refs(nc[i]);}
+  else if(l.nodeType===nc[i].nodeType&&l.nodeName===nc[i].nodeName)morph(l,nc[i]);
+  else{live.replaceChild(nc[i],l);refs(nc[i]);}
+ }
+ while(live.childNodes.length>nc.length)live.removeChild(live.lastChild);
+}
+let comp,pending=false;const app=document.getElementById('app'),tplNodes=Array.from(document.getElementById('tpl').content.childNodes);
+function schedule(){if(pending)return;pending=true;Promise.resolve().then(()=>{pending=false;render();});}
+function render(){const vals=comp.renderVals();const w=document.createElement('div');w.id='app';tplNodes.forEach(n=>build(n,vals,w));morph(app,w);}
+
+class Component extends DCLogic {
+  defaults() {
+    return {
+      booted: false, stack: [{ screen: 'home' }], query: '', favs: [], hist: [], toast: '', sheet: null,
+      offline: false, rType: '', rText: '', rAffected: '', rTouched: false, rStatus: 'idle', rSimFail: false,
+      upd: 'idle', updScn: 'success', dsVer: 'v1 \u00b7 88 groups, 449 models', dsWhen: 'No update applied yet', faq: -1, favTab: 'm', showAll: false, gq: ''
+    };
+  }
+  S() { return Object.assign({}, this.defaults(), this.state || {}); }
+  D() {
+    if (this._d) return this._d;
+    const RAW = {"m":[["Vivo Y11","Vivo"],["Vivo Y12","Vivo"],["Vivo Y15","Vivo"],["Vivo Y17","Vivo"],["Vivo U10","Vivo"],["Vivo Y3","Vivo"],["Vivo Y21","Vivo"],["Vivo Y21s","Vivo"],["Vivo Y21a","Vivo"],["Vivo Y21e","Vivo"],["Vivo Y21t","Vivo"],["Vivo Y21g","Vivo"],["Vivo Y02s","Vivo"],["Vivo Y16","Vivo"],["Vivo Y30 5G","Vivo"],["Vivo Y15a","Vivo"],["Vivo Y15c","Vivo"],["Vivo Y32","Vivo"],["Vivo Y33 5G","Vivo"],["Vivo Y20","Vivo"],["Vivo Y20g","Vivo"],["Vivo Y12g","Vivo"],["Vivo Y01","Vivo"],["Vivo Y22","Vivo"],["Vivo Y17s","Vivo"],["Vivo Y22s","Vivo"],["Vivo Y22 New","Vivo"],["Vivo Y28 5G","Vivo"],["Vivo Y33t","Vivo"],["Vivo Y36i","Vivo"],["Vivo Y36","Vivo"],["Vivo Y12 New","Vivo"],["Vivo T1x","Vivo"],["Vivo Y33s","Vivo"],["Vivo Y51 2020","Vivo"],["Vivo Y31 2020","Vivo"],["Vivo Y73","Vivo"],["Vivo Y72s","Vivo"],["Vivo Y53s","Vivo"],["iQOO Z3","iQOO"],["iQOO U3","iQOO"],["iQOO U3x","iQOO"],["Vivo Y31","Vivo"],["Vivo T2x","Vivo"],["Vivo Y72 5G","Vivo"],["Vivo Y55s 5G","Vivo"],["Vivo Y76 5G","Vivo"],["Vivo Y76s 5G","Vivo"],["Vivo Y75 5G","Vivo"],["Vivo Y77 5G","Vivo"],["Vivo Y56 5G","Vivo"],["Vivo Y20a","Vivo"],["Vivo Y20t","Vivo"],["Vivo Y20s","Vivo"],["Vivo Y20i","Vivo"],["Vivo Y20sg","Vivo"],["Vivo Y12s","Vivo"],["Vivo Y12a","Vivo"],["Vivo Y20e","Vivo"],["Vivo Y30g","Vivo"],["Vivo Y31s 5G","Vivo"],["Vivo Y11s","Vivo"],["Vivo Y12d","Vivo"],["Vivo Y15s","Vivo"],["iQOO U1x","iQOO"],["Vivo Y19","Vivo"],["Vivo U20","Vivo"],["Vivo Y5s","Vivo"],["Vivo U3x","Vivo"],["iQOO Z5i","iQOO"],["Vivo Y03","Vivo"],["Vivo Y18","Vivo"],["Vivo T3 Lite 5G","Vivo"],["Vivo Y28s 5G","Vivo"],["Vivo Y18e","Vivo"],["Vivo Y18i","Vivo"],["Vivo Y18s","Vivo"],["Vivo Z9 Lite 5G","Vivo"],["Vivo Y28e 5G","Vivo"],["Vivo Y03t","Vivo"],["Vivo Y18a","Vivo"],["Vivo Y37","Vivo"],["Vivo Y36t","Vivo"],["Vivo Y79","Vivo"],["Vivo V7 Plus","Vivo"],["Vivo Y79a","Vivo"],["Vivo Y91","Vivo"],["Vivo Y91i","Vivo"],["Vivo Y90","Vivo"],["Vivo Y91c","Vivo"],["Vivo Y93","Vivo"],["Vivo Y95","Vivo"],["Vivo Y1s","Vivo"],["Vivo U1","Vivo"],["Vivo Y02","Vivo"],["Vivo Y02t","Vivo"],["Vivo Y02 New","Vivo"],["Vivo Y02a","Vivo"],["Vivo Y71","Vivo"],["Vivo Y71i","Vivo"],["Vivo S1","Vivo"],["Vivo S1 Pro","Vivo"],["Vivo Z1x","Vivo"],["Vivo Y7s","Vivo"],["Vivo V17","Vivo"],["Vivo V19neo","Vivo"],["Vivo Z1 Pro","Vivo"],["Vivo Z5x","Vivo"],["Vivo V28","Vivo"],["Vivo V23e 5G","Vivo"],["Vivo Y75 4G","Vivo"],["Vivo V20","Vivo"],["Vivo V21e 4G","Vivo"],["Vivo V21e 5G","Vivo"],["Vivo V20 2021","Vivo"],["Vivo V21 4G","Vivo"],["Vivo V23e","Vivo"],["Vivo Y73 4G","Vivo"],["Vivo S6","Vivo"],["iQOO Z6 4G","iQOO"],["Vivo Y75","Vivo"],["Vivo V21e","Vivo"],["Vivo Y70","Vivo"],["Vivo X50 Lite","Vivo"],["Vivo Y55","Vivo"],["Vivo Y51 OLED","Vivo"],["Vivo T1 Pro","Vivo"],["Vivo V25e 5G","Vivo"],["Vivo V25 5G","Vivo"],["Vivo V21 5G","Vivo"],["Vivo S15e","Vivo"],["Vivo S9e","Vivo"],["Vivo V11","Vivo"],["Vivo V11i","Vivo"],["Vivo Z3i","Vivo"],["Vivo Y97","Vivo"],["Vivo Z3","Vivo"],["Vivo Y81","Vivo"],["Vivo Y81i","Vivo"],["Vivo Y83","Vivo"],["Vivo Y83 Pro","Vivo"],["Vivo Y81s","Vivo"],["Vivo V9","Vivo"],["Vivo V9 Youth","Vivo"],["Vivo","Vivo"],["Vivo X30 5G","Vivo"],["Vivo X30 Pro 5G","Vivo"],["Vivo Y200 5G","Vivo"],["Vivo T3","Vivo"],["Vivo Y300","Vivo"],["Vivo Y200e","Vivo"],["iQOO Z6 5G","iQOO"],["Vivo Y19e","Vivo"],["Vivo Y04","Vivo"],["Vivo Y19 5G","Vivo"],["Vivo Y29s 5G","Vivo"],["Vivo T2x 5G","Vivo"],["Vivo Y56 New","Vivo"],["Vivo Y55s","Vivo"],["Vivo Y72t","Vivo"],["Vivo T1 5G","Vivo"],["iQOO Z6 Lite 5G","iQOO"],["Vivo Y27 5G","Vivo"],["Vivo Y27s","Vivo"],["Vivo Y35 Plus","Vivo"],["Vivo Y27 4G","Vivo"],["Vivo Y36 4G","Vivo"],["Vivo Y35m","Vivo"],["Vivo Y35","Vivo"],["Vivo Y35 New","Vivo"],["Vivo S10e","Vivo"],["Vivo S7e","Vivo"],["Vivo Y73s","Vivo"],["Vivo Y71t","Vivo"],["Vivo Y55 4G","Vivo"],["Vivo X50","Vivo"],["Vivo G1","Vivo"],["Vivo Y28 4G","Vivo"],["Vivo Y38 5G","Vivo"],["Vivo Y19S","Vivo"],["Vivo V27 5G","Vivo"],["Vivo S16","Vivo"],["Vivo Y78 Plus","Vivo"],["Vivo V29e","Vivo"],["Vivo V29 Lite 5G","Vivo"],["Vivo Y200 Pro","Vivo"],["Vivo T2 Pro 5G","Vivo"],["Vivo V27 Pro 5G","Vivo"],["Vivo V29 Se 5G","Vivo"],["Vivo Y78 5G","Vivo"],["Vivo V3oe 5G","Vivo"],["Vivo Y300 Plus 5G","Vivo"],["iQOO Z7 Pro","iQOO"],["Vivo S16 Pro","Vivo"],["Vivo S17","Vivo"],["Vivo Y30 4G","Vivo"],["Vivo Y50","Vivo"],["Vivo Y30i","Vivo"],["Vivo Y50s","Vivo"],["Vivo Y70t","Vivo"],["Vivo V5","Vivo"],["Vivo Y67","Vivo"],["Vivo Y78T","Vivo"],["Vivo Y78","Vivo"],["Vivo Z8","Vivo"],["Vivo Z8X","Vivo"],["Vivo Y100i","Vivo"],["Vivo iQOO Z7X","Vivo"],["Vivo Y36 5G","Vivo"],["Vivo Y36 (Not India)","Vivo"],["Vivo V15 Pro","Vivo"],["Vivo X27","Vivo"],["Vivo V11 Pro","Vivo"],["Vivo X23","Vivo"],["Vivo V20 Pro","Vivo"],["Vivo S7","Vivo"],["Vivo S7T","Vivo"],["Vivo V23 5G","Vivo"],["Vivo S9","Vivo"],["Vivo S10 + Vivo S10 Pro","Vivo"],["Vivo S12 Pro","Vivo"],["Vivo X60","Vivo"],["Vivo X70","Vivo"],["Vivo V2045","Vivo"],["Vivo iQOO 007","Vivo"],["Vivo iQOO Neo 5S","Vivo"],["Vivo iQOO Neo 5","Vivo"],["Vivo S15","Vivo"],["Vivo Y100","Vivo"],["Vivo Y100A","Vivo"],["Vivo Y100 T2 5G","Vivo"],["iQOO Z7 5G","iQOO"],["Vivo Y200e 5G","Vivo"],["Vivo T3 5G","Vivo"],["Vivo V30 Lite","Vivo"],["Vivo V40 Lite","Vivo"],["Vivo Y52s","Vivo"],["Vivo Y72","Vivo"],["Vivo Y51","Vivo"],["Vivo T4x 5G","Vivo"],["iQOO Z10x 5G","iQOO"],["Vivo T3x 5G","Vivo"],["Vivo Y58 5G","Vivo"],["iQOO 29X","iQOO"],["Vivo Y200i 5G","Vivo"],["Vivo iQOO Z9x 5G","Vivo"],["Vivo Y29 5G","Vivo"],["Vivo Y29 4G","Vivo"],["Vivo Y39 5G","Vivo"],["Vivo Y19s Pro","Vivo"],["Vivo Y31 5G 2025","Vivo"],["Vivo Y21D 2025","Vivo"],["Vivo V40E","Vivo"],["Vivo T3 Pro","Vivo"],["iQOO Z9s","iQOO"],["iQOO Z9s Pro Curved","iQOO"],["Vivo Y400 Pro 5G","Vivo"],["Vivo V30","Vivo"],["Vivo V30 Pro","Vivo"],["Vivo S18","Vivo"],["Vivo S18 Pro","Vivo"],["Vivo V40","Vivo"],["Vivo V40 Pro Curved","Vivo"],["Redmi A1 New","Redmi"],["Poco C50","Poco"],["Redmi A1","Redmi"],["Redmi A1 Plus","Redmi"],["Redmi A2","Redmi"],["Redmi A2 New","Redmi"],["Redmi A2 Plus","Redmi"],["Redmi 10 Prime","Redmi"],["Redmi 10 4G","Redmi"],["Redmi 9","Redmi"],["Redmi 9 Prime","Redmi"],["Poco M2","Poco"],["Redmi Note 11 4G","Redmi"],["Poco M4 Pro 4G","Poco"],["Redmi Note 11","Redmi"],["Redmi Note 11S","Redmi"],["Redmi Note 12S","Redmi"],["Poco C55","Poco"],["Redmi 12C","Redmi"],["Poco C40","Poco"],["Redmi 10","Redmi"],["Redmi 10C","Redmi"],["Redmi 10 Power","Redmi"],["Redmi 11A","Redmi"],["Redmi 5A","Redmi"],["Redmi Go","Redmi"],["Redmi 6A","Redmi"],["Redmi 6","Redmi"],["Redmi 9A","Redmi"],["Redmi 9AT","Redmi"],["Redmi 9A Sport","Redmi"],["Redmi 9I Sport","Redmi"],["Mi 10A","Mi"],["Redmi 9C","Redmi"],["Poco C3","Poco"],["Poco C31","Poco"],["Redmi 9I","Redmi"],["Redmi 10A","Redmi"],["Redmi 12 5G","Redmi"],["Redmi 12 4G","Redmi"],["Redmi 13 4G","Redmi"],["Redmi 13 5G","Redmi"],["Redmi 13X 4G","Redmi"],["Poco M6 Pro 5G","Poco"],["Poco M6 Plus 5G","Poco"],["Poco M6 4G","Poco"],["Redmi NOTE 12R","Redmi"],["Redmi Note 13R","Redmi"],["Redmi 12 New","Redmi"],["Redmi 9 Power","Redmi"],["Poco M3","Poco"],["Redmi Note 9 4G Center Camera","Redmi"],["Redmi 9T","Redmi"],["Redmi Note 9 Pro","Redmi"],["Redmi Note 9 Pro Max","Redmi"],["Poco M2 Pro","Poco"],["Redmi Note 10 Lite","Redmi"],["Redmi 7","Redmi"],["Redmi Y3","Redmi"],["Redmi Note 10T 5G","Redmi"],["Redmi Note 10 5G","Redmi"],["Redmi Note 11 Se","Redmi"],["Poco M3 Pro 5G","Poco"],["Redmi Note 11E","Redmi"],["Poco M4 5G","Poco"],["Redmi 11R","Redmi"],["Mi 10 5G","Mi"],["Redmi 11 Prime","Redmi"],["Poco M5","Poco"],["Redmi Prime 5G","Redmi"],["Redmi 10 5G","Redmi"],["Redmi Note 11R","Redmi"],["Redmi Note 11 Prime 4G","Redmi"],["Redmi Note 13 4G","Redmi"],["Redmi Note 14 5G","Redmi"],["Redmi Note 14 4G","Redmi"],["Poco M7 Pro 5G","Poco"],["Redmi Note 7","Redmi"],["Redmi Note 7 Pro","Redmi"],["Redmi Note 7S","Redmi"],["Poco X3","Poco"],["Mi 10I","Mi"],["Redmi Note 9 Pro 5G","Redmi"],["Poco X3 Pro","Poco"],["Redmi 13C 4G","Redmi"],["Redmi 13C 5G","Redmi"],["Redmi 13C","Redmi"],["Poco M6 5G","Poco"],["Poco C65","Poco"],["Redmi A3 New","Redmi"],["Poco C61","Poco"],["Redmi A3X","Redmi"],["Redmi Note 12 4G","Redmi"],["Redmi Note 12 5G","Redmi"],["Poco X5 5G","Poco"],["Redmi Note 12","Redmi"],["Redmi NOTE 10 Pro","Redmi"],["Redmi NOTE 10 Pro MAX","Redmi"],["Redmi NOTE 11 Pro 4G","Redmi"],["Redmi NOTE 11 Pro 5G","Redmi"],["Poco X4 Pro 5G","Poco"],["MI11i 5G","Redmi/Poco"],["Redmi NOTE 11 Pro Plus","Redmi"],["Redmi Note 12 Pro","Redmi"],["Redmi Note 12 Pro Plus","Redmi"],["Poco X5 Pro","Poco"],["Redmi Note 13","Redmi"],["Redmi Note 14","Redmi"],["Redmi S2","Redmi"],["Redmi Y2","Redmi"],["iQOO 5 5G","iQOO"],["iQOO Z5 5G","iQOO"],["Redmi 14C","Redmi"],["Redmi 14R","Redmi"],["Redmi A4","Redmi"],["Redmi A3 Pro","Redmi"],["Poco C75","Poco"],["Redmi 14 New","Redmi"],["Redmi 11X Pro","Redmi"],["Redmi 11I","Redmi"],["Poco F3","Poco"],["Poco F4","Poco"],["Poco F3 Pro","Poco"],["Redmi K40","Redmi"],["Redmi K40 Pro","Redmi"],["Redmi K40 Pro Plus","Redmi"],["Redmi K40s","Redmi"],["Mi 11X","Mi"],["Redmi K20","Redmi"],["Redmi K20 Pro","Redmi"],["Mi 9T","Mi"],["Mi 9T Pro","Mi"],["Redmi K30s","Redmi"],["Mi 10T","Mi"],["Mi 10T Pro","Mi"],["Redmi K60","Redmi"],["Redmi K60 Pro","Redmi"],["Poco F5 Pro","Poco"],["Redmi Note 11S 4G","Redmi"],["Redmi Note 10 4G","Redmi"],["Redmi Note 10S 4G","Redmi"],["Redmi Note 11 SE 4G","Redmi"],["Poco M5s","Poco"],["Redmi Note 13 Pro 5G","Redmi"],["Redmi K70E","Redmi"],["Poco X6 5G","Poco"],["Poco X6 Pro 5G","Poco"],["Redmi 8","Redmi"],["Redmi 8A","Redmi"],["Redmi 8A Dual","Redmi"],["Redmi 6PRO","Redmi"],["Redmi A2 Lite","Redmi"],["Redmi 6X","Redmi"],["MI10 4G Global","Redmi/Poco"],["Poco C71","Poco"],["Redmi A5 New","Redmi"],["Poco F5","Poco"],["Redmi NOTE 12 TURBO","Redmi"],["Redmi Note 13 5G","Redmi"],["Redmi K50","Redmi"],["Redmi K50 Pro","Redmi"],["Redmi K60E","Redmi"],["Redmi 11T","Redmi"],["Redmi 11T Pro","Redmi"],["Redmi 11 Lite 5G","Redmi"],["Redmi 11 Lite","Redmi"],["Redmi 11 Lite 4G","Redmi"],["Redmi 11 Lite NE","Redmi"],["Redmi 13T","Redmi"],["Redmi 13T Pro","Redmi"],["Redmi K60 ULTRA","Redmi"],["Poco X2","Poco"],["Poco X2 Pro","Poco"],["Redmi K30","Redmi"],["Redmi K30I","Redmi"],["Poco F2 COF","Poco"],["Redmi 15C 5G","Redmi"],["Poco C85 5G","Poco"],["Redmi A7 Pro 4G","Redmi"],["Redmi A7 Pro 5G","Redmi"],["Redmi 15A 5G","Redmi"],["Poco C85x 5G","Poco"],["Poco C85 Pro 4G","Poco"],["Poco C81 4G","Poco"],["Redmi R70 5G","Redmi"],["Redmi R70M 5G","Redmi"]],"g":[["vivo-display-001",1,"Vivo",[0,1,2,3,4,5],"",""],["vivo-display-002",2,"Vivo",[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64],"",""],["vivo-display-004",4,"Vivo",[65,66,67,68,69],"",""],["vivo-display-005",5,"Vivo",[70,71,72,73,74,75,76,77,78,79,80,81,82],"",""],["vivo-display-006",6,"Vivo",[83,84,85],"",""],["vivo-display-007",7,"Vivo",[86,87,88,89,90,91,92,93],"",""],["vivo-display-009",9,"Vivo",[94,95,96,97],"",""],["vivo-display-010",10,"Vivo",[98,99],"",""],["vivo-display-011",11,"Vivo",[100,101,102,103],"",""],["vivo-display-012",12,"Vivo",[104,105],"",""],["vivo-display-013",13,"Vivo",[106,107],"",""],["vivo-display-014",14,"Vivo",[108,36,109,110],"",""],["vivo-display-015",15,"Vivo",[111,112,113,114,115,116,117,118,110,119],"",""],["vivo-display-016",16,"Vivo",[111,116,120,121,122,123,124,125],"OLED ONLY",""],["vivo-display-017",17,"Vivo",[126,127,128,129,130,131],"","empty"],["vivo-display-018",18,"Vivo",[132,133,134,135,136],"",""],["vivo-display-019",19,"Vivo",[137,138,139,140,141],"",""],["vivo-display-020",20,"Vivo",[142,143,144],"","incomplete"],["vivo-display-021",21,"Vivo",[145,146],"",""],["vivo-display-022",22,"Vivo",[147,148,149,150,151],"",""],["vivo-display-023",23,"Vivo",[152,153,154,155],"","empty"],["vivo-display-024",24,"Vivo",[156,157,158,49,44,159,50,48,160,151,161],"",""],["vivo-display-025",25,"Vivo",[162,163,164,165,166,167],"",""],["vivo-display-026",26,"Vivo",[168,169],"",""],["vivo-display-027",27,"Vivo",[113,170,118,171,172,173,174,175,176],"",""],["vivo-display-028",28,"Vivo",[151,161],"",""],["vivo-display-029",29,"Vivo",[177,178,179],"",""],["vivo-display-030",30,"Vivo",[180,181,182,183,184,185,186,187,188,189,190,191,192,193,194],"",""],["vivo-display-031",31,"Vivo",[195,196,197,198,199],"",""],["vivo-display-032",32,"Vivo",[200,201],"",""],["vivo-display-033",33,"Vivo",[202,203,204,205,206,207,208,209],"",""],["vivo-display-034",34,"Vivo",[210,211],"",""],["vivo-display-035",35,"Vivo",[212,213],"",""],["vivo-display-036",36,"Vivo",[214,215,216],"",""],["vivo-display-037",37,"Vivo",[217,218,219,220],"",""],["vivo-display-038",38,"Vivo",[221,222,223],"",""],["vivo-display-039",39,"Vivo",[224,225,226,227],"",""],["vivo-display-040",40,"Vivo",[228,229,230,231],"",""],["vivo-display-041",41,"Vivo",[147,232,228,233,183,234,235],"",""],["vivo-display-042",42,"Vivo",[236,48,237,39,238,38],"",""],["vivo-display-043",43,"Vivo",[239,240,241,242,243,244,245,246,247,248,177,178,179,249,250,251],"",""],["vivo-display-044",44,"Vivo",[252,253,254,255,256],"",""],["vivo-display-045",45,"Vivo",[257,258,259,260,261,262],"",""],["redmi-poco-display-001",1,"Redmi/Poco",[263,264,265,266,267,268,269],"",""],["redmi-poco-display-002",2,"Redmi/Poco",[270,271],"",""],["redmi-poco-display-003",3,"Redmi/Poco",[272,273,274],"",""],["redmi-poco-display-004",4,"Redmi/Poco",[275,276,277,278,279],"","empty"],["redmi-poco-display-005",5,"Redmi/Poco",[280,281,282,283,284,285,286],"",""],["redmi-poco-display-006",6,"Redmi/Poco",[287,288],"",""],["redmi-poco-display-007",7,"Redmi/Poco",[289,290],"",""],["redmi-poco-display-008",8,"Redmi/Poco",[291,292,293,294,295,296,297,298,299,300],"",""],["redmi-poco-display-009",9,"Redmi/Poco",[301,302,303,304,305,306,307,308,309,310,311],"","empty"],["redmi-poco-display-010",10,"Redmi/Poco",[312,313,314,315],"",""],["redmi-poco-display-011",11,"Redmi/Poco",[316,317,318,319],"",""],["redmi-poco-display-012",12,"Redmi/Poco",[320,321],"",""],["redmi-poco-display-014",14,"Redmi/Poco",[322,323,324,325],"",""],["redmi-poco-display-015",15,"Redmi/Poco",[326,327,328,329,330,331,332,333,334,335],"",""],["redmi-poco-display-016",16,"Redmi/Poco",[336,337,338,339],"",""],["redmi-poco-display-017",17,"Redmi/Poco",[340,341,342],"",""],["redmi-poco-display-018",18,"Redmi/Poco",[343,344,345,346],"",""],["redmi-poco-display-019",19,"Redmi/Poco",[347,348,349,350,351],"",""],["redmi-poco-display-020",20,"Redmi/Poco",[352,353,354],"",""],["redmi-poco-display-021",21,"Redmi/Poco",[355,356,357,358],"","empty"],["redmi-poco-display-022",22,"Redmi/Poco",[359,360,361,362,363,364,365],"",""],["redmi-poco-display-023",23,"Redmi/Poco",[366,367,368],"",""],["redmi-poco-display-024",24,"Redmi/Poco",[369,370],"","empty"],["redmi-poco-display-025",25,"Redmi/Poco",[371,372],"",""],["redmi-poco-display-026",26,"Redmi/Poco",[373,374],"",""],["redmi-poco-display-027",27,"Redmi/Poco",[375,376,377,378,379,380],"","empty"],["redmi-poco-display-028",28,"Redmi/Poco",[381,382,383,384,385,386,387,388,389,390],"",""],["redmi-poco-display-029",29,"Redmi/Poco",[391,392,393,394],"","empty"],["redmi-poco-display-030",30,"Redmi/Poco",[395,396,397],"",""],["redmi-poco-display-031",31,"Redmi/Poco",[398,399,400],"",""],["redmi-poco-display-032",32,"Redmi/Poco",[401,275,279,402,403,404,405,276,277,278],"","empty"],["redmi-poco-display-033",33,"Redmi/Poco",[406,407,408,409],"",""],["redmi-poco-display-034",34,"Redmi/Poco",[410,411,412],"",""],["redmi-poco-display-035",35,"Redmi/Poco",[413,414],"",""],["redmi-poco-display-036",36,"Redmi/Poco",[267,415],"",""],["redmi-poco-display-037",37,"Redmi/Poco",[270,416],"",""],["redmi-poco-display-038",38,"Redmi/Poco",[417,418],"",""],["redmi-poco-display-039",39,"Redmi/Poco",[419,420,421],"",""],["redmi-poco-display-040",40,"Redmi/Poco",[422,423,424],"",""],["redmi-poco-display-042",42,"Redmi/Poco",[425,426],"",""],["redmi-poco-display-043",43,"Redmi/Poco",[427,428,429,430],"",""],["redmi-poco-display-044",44,"Redmi/Poco",[431,432,433],"",""],["redmi-poco-display-045",45,"Redmi/Poco",[434,435,436,437,438],"",""],["redmi-poco-display-046",46,"Redmi/Poco",[439,440],"",""],["redmi-poco-display-047",47,"Redmi/Poco",[441,442,443,444,445,446,447,448],"",""]]};
+    const BR = ['vivo', 'redmi', 'poco', 'iqoo', 'mi'];
+    const models = RAW.m.map((r, i) => {
+      const words = r[0].trim().split(/\s+/), fw = words[0].toLowerCase();
+      return { id: 'm' + i, name: r[0], brand: r[1], groups: [], incomplete: r[0].trim().toLowerCase() === r[1].toLowerCase(),
+        cx: this.comp(r[0]), bl: (BR.indexOf(fw) >= 0 && words.length > 1) ? fw.length : 0 };
+    });
+    const byId = id => models[Number(id.slice(1))];
+    const groups = {}, order = [];
+    RAW.g.forEach(r => {
+      const g = { id: r[0], num: r[1], brandLabel: r[2], ref: r[2] + ' group ' + r[1], models: r[3].map(i => 'm' + i), restr: r[4],
+        restrNote: r[4] ? 'OLED ONLY. Confirm the panel type before use.' : '', review: r[5], status: r[5] ? 'review' : 'unverified',
+        reviewText: r[5] === 'empty' ? 'The source list had an empty entry here, so a model may be missing. Confirm before use.' : (r[5] === 'incomplete' ? 'The source list has an incomplete entry in this group (shown below). Confirm before use.' : '') };
+      groups[g.id] = g; order.push(g.id);
+      g.models.forEach(id => { byId(id).groups.push(g.id); });
+    });
+    this._d = { models, groups, order, byId };
+    return this._d;
+  }
+  comp(str) {
+    const s = String(str).toLowerCase(); let c = '', map = [], bnd = [], prev = '';
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i]; let add;
+      if (ch === '+') add = 'plus'; else if (/[a-z0-9]/.test(ch)) add = ch; else { prev = ''; continue; }
+      const cls = /[0-9]/.test(add[0]) ? 'd' : 'l';
+      for (let k = 0; k < add.length; k++) { bnd.push(k === 0 && cls !== prev ? 1 : 0); map.push(i); c += add[k]; }
+      prev = cls;
+    }
+    return { c, map, bnd };
+  }
+  lev(a, b) {
+    let p = []; for (let j = 0; j <= b.length; j++) p.push(j);
+    for (let i = 1; i <= a.length; i++) {
+      const cur = [i];
+      for (let j = 1; j <= b.length; j++) cur.push(Math.min(p[j] + 1, cur[j - 1] + 1, p[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)));
+      p = cur;
+    }
+    return p[b.length];
+  }
+  search(qc, qWords, D) {
+    const hit = [], nat = (x, y) => x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' });
+    const atBoundary = (m, w) => { let j = m.cx.c.indexOf(w); while (j >= 0 && !m.cx.bnd[j]) j = m.cx.c.indexOf(w, j + 1); return j; };
+    D.models.forEach(m => {
+      if (m.incomplete) return;
+      const c = m.cx.c; let tier = -1, start = -1, end = 0, rest = 0;
+      if (qc === c) { tier = 0; start = 0; end = c.length; }
+      else if (m.bl && qc === c.slice(m.bl)) { tier = 0; start = m.bl; end = c.length; }
+      else {
+        const i = atBoundary(m, qc);
+        if (i >= 0) { tier = (i === 0 || i === m.bl) ? 1 : 2; start = i; end = i + qc.length; rest = c.length - end; }
+        else if (qWords.length > 1) {
+          let ok = true, total = 0;
+          qWords.forEach(w => { if (atBoundary(m, w) < 0) ok = false; else total += w.length; });
+          if (ok) { tier = 3; rest = c.length - total; }
+        }
+      }
+      if (tier >= 0) hit.push({ m, tier, start, end, rest });
+    });
+    hit.sort((a, b) => a.tier - b.tier || a.rest - b.rest || nat(a.m.name, b.m.name));
+    let fuzzy = [];
+    if (hit.length === 0 && qc.length >= 3) {
+      const lim = qc.length <= 4 ? 1 : 2, f = [];
+      D.models.forEach(m => {
+        if (m.incomplete) return;
+        const cands = [m.cx.c]; if (m.bl) cands.push(m.cx.c.slice(m.bl));
+        let best = 99;
+        cands.forEach(cc => { best = Math.min(best, this.lev(qc, cc), this.lev(qc, cc.slice(0, qc.length + 1))); });
+        if (best <= lim) f.push({ m, d: best });
+      });
+      f.sort((a, b) => a.d - b.d || nat(a.m.name, b.m.name));
+      fuzzy = f.slice(0, 5).map(x => x.m);
+    }
+    return { exact: hit.filter(h => h.tier === 0), similar: hit.filter(h => h.tier > 0), fuzzy };
+  }
+  later(fn, ms) { const t = setTimeout(fn, ms); (this._timers = this._timers || []).push(t); }
+  componentDidMount() { this.later(() => this.setState({ booted: true }), 700); }
+  componentWillUnmount() { (this._timers || []).forEach(clearTimeout); clearTimeout(this._tt); }
+  say(msg) { this.setState({ toast: msg }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast: '' }), 2400); }
+  go(screen, extra) { const s = this.S(); this.setState({ stack: s.stack.concat([Object.assign({ screen }, extra || {})]), sheet: null, gq: '' }); }
+  back() { const s = this.S(); if (s.stack.length > 1) this.setState({ stack: s.stack.slice(0, -1), sheet: null, gq: '' }); }
+  tab(name) { this.setState({ stack: [{ screen: name }], sheet: null, gq: '' }); }
+  openModel(id) { const s = this.S(); this.setState({ hist: [id].concat(s.hist.filter(x => x !== id)).slice(0, 30) }); this.go('results', { mid: id }); }
+  openGroup(gid, mid) { this.go('group', { gid, mid: mid || null }); }
+  toggleFav(key) {
+    const s = this.S(); const has = s.favs.includes(key);
+    this.setState({ favs: has ? s.favs.filter(k => k !== key) : [key].concat(s.favs) });
+    this.say(has ? 'Removed from Favorites' : 'Added to Favorites');
+  }
+  openReport(type, affected) { this.setState({ sheet: 'report', rType: type || this.S().rType, rAffected: affected !== undefined ? affected : this.S().rAffected, rTouched: false, rStatus: this.S().rStatus === 'error' ? 'error' : 'idle' }); }
+  checkUpdates() {
+    if (this.S().offline) { this.setState({ upd: 'offline' }); return; }
+    this.setState({ upd: 'checking' });
+    this.later(() => { this.setState({ upd: this.S().updScn === 'uptodate' ? 'uptodate' : 'available' }); }, 900);
+  }
+  downloadUpdate() {
+    this.setState({ upd: 'downloading' });
+    this.later(() => {
+      if (this.S().updScn === 'dlfail') { this.setState({ upd: 'failed' }); return; }
+      this.setState({ upd: 'validating' });
+      this.later(() => {
+        if (this.S().updScn === 'invalid') { this.setState({ upd: 'invalid' }); return; }
+        this.setState({ upd: 'success', dsVer: 'v2 (prototype)', dsWhen: 'Applied in this session' });
+      }, 900);
+    }, 1400);
+  }
+  submitReport() {
+    const s = this.S();
+    if (s.rStatus === 'submitting' || !s.rType || s.rText.trim().length < 10 || s.offline) return;
+    this.setState({ rStatus: 'submitting' });
+    this.later(() => { this.setState({ rStatus: this.S().rSimFail ? 'error' : 'success' }); }, 1200);
+  }
+  renderVals() {
+    const self = this, s = this.S(), D = this.D();
+    const top = s.stack[s.stack.length - 1], scr = top.screen;
+    const byId = D.byId;
+    const qx = this.comp(s.query), qc = qx.c;
+    const qWords = s.query.toLowerCase().replace(/\+/g, ' plus ').split(/[^a-z0-9]+/).filter(Boolean);
+    const res = qc.length >= 2 ? this.search(qc, qWords, D) : { exact: [], similar: [], fuzzy: [] };
+    const all = res.exact.concat(res.similar), exactN = res.exact.length;
+    const shown = (s.showAll ? all : all.slice(0, 8));
+    const gl = n => n === 0 ? 'No group yet' : n + (n > 1 ? ' groups' : ' group');
+    const tagOf = m => m.groups.length === 1 ? 'Group ' + D.groups[m.groups[0]].num : gl(m.groups.length);
+    const sugg = shown.map((h, i) => {
+      const m = h.m; let pre = m.name, mid = '', post = '';
+      if (h.start >= 0 && h.end > h.start) { const os = m.cx.map[h.start], oe = m.cx.map[h.end - 1] + 1; pre = m.name.slice(0, os); mid = m.name.slice(os, oe); post = m.name.slice(oe); }
+      let header = '';
+      if (i === 0) header = exactN > 0 ? 'Exact match' : (all.length > 1 ? all.length + ' models match. Choose the exact one.' : '1 model found');
+      else if (i === exactN && exactN > 0) header = 'Similar models (' + res.similar.length + ')';
+      return { id: m.id, brand: m.brand, name: m.name, aria: m.brand + ' ' + m.name + ', ' + tagOf(m), pre, mid, post, header, hasHeader: header !== '',
+        tag: tagOf(m), tagColor: '#004A99', open: () => self.openModel(m.id) };
+    });
+    const fz = res.fuzzy.map(m => ({ brand: m.brand, name: m.name, aria: m.brand + ' ' + m.name, tag: tagOf(m), open: () => self.openModel(m.id) }));
+    const mini = (id, extra) => { const m = byId(id); return Object.assign({ id, brand: m.brand, name: m.name, aria: m.brand + ' ' + m.name, tag: gl(m.groups.length) }, extra); };
+    const recents = s.hist.slice(0, 3).map(id => mini(id, { open: () => self.openModel(id) }));
+    const histItems = s.hist.map(id => mini(id, {
+      open: () => self.openModel(id), removeLabel: 'Remove ' + byId(id).name + ' from history',
+      remove: () => { self.setState({ hist: self.S().hist.filter(x => x !== id) }); self.say('Removed from history'); }
+    }));
+    const favModels = s.favs.filter(k => k.indexOf('m:') === 0).map(k => k.slice(2)).map(id => mini(id, {
+      open: () => self.openModel(id), removeLabel: 'Remove ' + byId(id).name + ' from favorites', remove: () => self.toggleFav('m:' + id)
+    }));
+    const favGroups = s.favs.filter(k => k.indexOf('g:') === 0).map(k => k.slice(2)).map(gid => {
+      const g = D.groups[gid];
+      return { ref: g.ref, count: g.models.length, statusLabel: g.status === 'review' ? 'Needs review' : 'Unverified', hasRestr: !!g.restr, restr: g.restr,
+        open: () => self.openGroup(gid, null), removeLabel: 'Remove ' + g.ref + ' from favorites', remove: () => self.toggleFav('g:' + gid) };
+    });
+    const model = top.mid ? byId(top.mid) : null;
+    const gView = (gid, mid) => {
+      const g = D.groups[gid], others = g.models.filter(x => x !== mid).map(x => byId(x)).filter(m => !m.incomplete).map(m => m.name);
+      return { id: gid, sid: g.id, num: g.num, ref: g.ref, count: g.models.length, isReview: g.status === 'review', isUnv: g.status !== 'review', hasRestr: !!g.restr, restr: g.restr, restrNote: g.restrNote, reviewText: g.reviewText,
+        preview: 'Also listed: ' + others.slice(0, 2).join(', ') + (others.length > 2 ? ' +' + (others.length - 2) + ' more' : ''), open: () => self.openGroup(gid, mid) };
+    };
+    const gcards = model ? model.groups.map(gid => gView(gid, model.id)) : [];
+    const grp = top.gid ? D.groups[top.gid] : null;
+    const group = grp ? gView(grp.id, top.mid) : { ref: '', sid: '', num: '', isUnv: true, isReview: false, hasRestr: false, restr: '', restrNote: '', reviewText: '' };
+    const cur = top.mid ? byId(top.mid) : null;
+    const gqc = this.comp(s.gq).c;
+    const allOthers = grp ? grp.models.filter(x => x !== top.mid).map(x => byId(x)) : [];
+    const others = allOthers.filter(m => !gqc || (!m.incomplete && m.cx.c.indexOf(gqc) >= 0)).map(m => ({ brand: m.brand, name: m.name, incomplete: m.incomplete, normal: !m.incomplete, open: () => self.openModel(m.id) }));
+    const showGroupSearch = allOthers.length > 8;
+    const othersLabel = gqc ? others.length + ' of ' + allOthers.length : String(allOthers.length);
+    const statusText = grp ? (grp.status === 'review' ? 'Unverified, needs review' : 'Unverified') : '';
+    const copyGroup = () => {
+      if (!grp) return;
+      const lines = ['Phone model: ' + (cur ? cur.name : 'not specified'), 'Part type: Display / LCD', 'Status: ' + statusText,
+        'Listed models: ' + grp.models.map(x => byId(x)).filter(m => !m.incomplete).map(m => m.name).join('; ')];
+      if (grp.restr) lines.push('Restrictions: ' + grp.restrNote);
+      if (grp.reviewText) lines.push('Review note: ' + grp.reviewText);
+      lines.push('Source group: ' + grp.id);
+      lines.push('Dataset version: ' + s.dsVer, 'Note: listed in the same source group; not confirmed as physically interchangeable.');
+      const text = lines.join('\n');
+      try { navigator.clipboard.writeText(text).then(() => self.say('Copied'), () => self.say("Couldn't copy. Clipboard unavailable here.")); }
+      catch (e) { self.say("Couldn't copy. Clipboard unavailable here."); }
+    };
+    const favM = model ? s.favs.includes('m:' + model.id) : false;
+    const favG = grp ? s.favs.includes('g:' + grp.id) : false;
+    const navStyle = on => ({ bg: on ? '#E6F0FB' : 'transparent', color: on ? '#0057B8' : '#475569', cur: on ? 'page' : 'false' });
+    const showNav = ['home', 'favorites', 'history', 'settings'].indexOf(scr) >= 0;
+    const hints = [['y21', 'y21'], ['vivo y21', 'vivo y21 (exact)'], ['note 11', 'note 11'], ['poco m4 pro', 'poco m4 pro'], ['iqoo z6', 'iqoo z6'], ['y2100', 'y2100 (typo)'], ['samsung s23', 'samsung s23 (no match)']].map(h => ({ label: h[1], pick: () => self.setState({ query: h[0], showAll: false }) }));
+    const scn = [['success', 'Update successfully'], ['uptodate', 'Find nothing new'], ['dlfail', 'Fail downloading'], ['invalid', 'Fail validation']];
+    const scenarios = scn.map(x => { const on = s.updScn === x[0]; return { label: x[1], sel: on, border: on ? '#0057B8' : '#B8C4D4', bg: on ? '#E6F0FB' : '#fff', color: on ? '#0057B8' : '#334155', pick: () => self.setState({ updScn: x[0], upd: 'idle' }) }; });
+    const faqData = [
+      ['How do I search for a phone model?', 'Type part of the brand or model on the Search screen. Matching ignores capitals, extra spaces and punctuation. Pick the exact model from the list. It works without internet.'],
+      ['How do I read compatibility results?', 'Each card is one compatibility group for Display / LCD. It shows the status, any restriction and how many models are listed together. Open a group to see every model in it.'],
+      ['What does Unverified mean?', 'The listing comes from a supplied source list and has not been independently confirmed. Treat it as a lead, and check the part before you rely on it.'],
+      ['What does OLED only mean?', 'The source notes say the group applies to OLED panels only. The restriction is shown on the result and kept in copied summaries.'],
+      ['How do I report incorrect compatibility?', 'Open a model or group and tap Report issue. Choose the type, describe the problem and submit. An administrator reviews it before any data changes.'],
+      ['How does offline search work?', 'The full dataset is stored on your phone. Search, favorites and history all work without a connection. Only update checks and reports need the internet.'],
+      ['How do I update compatibility data?', 'Go to Settings, then Check for dataset updates. A new dataset is downloaded and validated first. Your current data is only replaced after it passes.'],
+      ['Why might a model not appear in search?', 'It may not be in the dataset yet, or the name may differ. Try fewer words. If it is still missing, report a missing model.'],
+      ['How do I contact support?', 'Support contact details are not configured in this prototype. Use Report an issue in Settings for now.']
+    ];
+    const faqs = faqData.map((f, i) => ({ q: f[0], a: f[1], open: s.faq === i, sign: s.faq === i ? '\u2212' : '+', toggle: () => self.setState({ faq: s.faq === i ? -1 : i }) }));
+    const rTypeList = ['Incorrect compatibility listing', 'Missing phone model', 'Missing compatible model', 'Incorrect restriction or part type', 'Duplicate or confusing group', 'Other issue'];
+    const rTypes = rTypeList.map(t => { const on = s.rType === t; return { label: t, sel: on, border: on ? '#0057B8' : '#B8C4D4', bg: on ? '#E6F0FB' : '#fff', color: on ? '#003A7A' : '#334155', pick: () => self.setState({ rType: t }) }; });
+    const rLen = s.rText.trim().length, descErr = s.rTouched && rLen < 10;
+    const busy = s.rStatus === 'submitting';
+    const ui = {}; ['idle', 'checking', 'available', 'downloading', 'validating', 'success', 'uptodate', 'offline', 'failed', 'invalid'].forEach(k => { ui[k] = s.upd === k; });
+    const updAvail = s.upd === 'available';
+    return {
+      showSplash: !s.booted, booted: s.booted, offline: s.offline,
+      isHome: scr === 'home', isResults: scr === 'results', isGroup: scr === 'group', isFavs: scr === 'favorites', isHist: scr === 'history',
+      isSettings: scr === 'settings', isUpdate: scr === 'update', isHelp: scr === 'help', showNav,
+      query: s.query, hasQuery: s.query.length > 0, qEmpty: qc.length === 0, qShort: qc.length === 1,
+      hasMatches: all.length > 0, matchCount: all.length, hasMore: all.length > shown.length, showAllFn: () => self.setState({ showAll: true }),
+      noMatch: qc.length >= 2 && all.length === 0, fz, hasFuzzy: fz.length > 0,
+      showGroupSearch, gq: s.gq, onGq: e => self.setState({ gq: e.target.value }), clearGq: () => self.setState({ gq: '' }), gqNone: showGroupSearch && !!gqc && others.length === 0, othersLabel,
+      sugg, recents, hasRecent: recents.length > 0, noRecent: recents.length === 0, hints, updAvail,
+      inputRef: el => { self._inp = el; },
+      onQuery: e => self.setState({ query: e.target.value, showAll: false }),
+      clearQuery: () => { self.setState({ query: '', showAll: false }); if (self._inp) self._inp.focus(); },
+      editSearch: () => { if (self._inp) { self._inp.focus(); self._inp.select(); } },
+      toUpdate: () => self.go('update'), toFavs: () => self.tab('favorites'), toHist: () => self.tab('history'), toHelp: () => self.go('help'),
+      tabHome: () => self.tab('home'), tabFavs: () => self.tab('favorites'), tabHist: () => self.tab('history'), tabSettings: () => self.tab('settings'),
+      toHomeSearch: () => self.tab('home'), goBack: () => self.back(), searchAnother: () => self.tab('home'),
+      model: model || { brand: '', name: '' }, gcards, hasGroups: !!model && model.groups.length > 0, noGroups: !!model && model.groups.length === 0,
+      groupCountLabel: model ? 'Listed in ' + gl(model.groups.length) + ' for this model. Groups are shown separately.' : '',
+      favModelOn: favM, favModelFill: favM ? '#0057B8' : 'none', favModelStroke: favM ? '#0057B8' : '#0F172A',
+      favModelLabel: favM ? 'Remove from favorites' : 'Add to favorites', favModelToggle: () => model && self.toggleFav('m:' + model.id),
+      group, current: cur || { brand: '', name: '' }, hasCurrent: !!cur, others, othersCount: others.length, dsVer: s.dsVer, dsWhen: s.dsWhen,
+      favGroupOn: favG, favGroupFill: favG ? '#0057B8' : 'none', favGroupStroke: favG ? '#0057B8' : '#0F172A',
+      favGroupLabel: favG ? 'Remove group from favorites' : 'Add group to favorites', favGroupToggle: () => grp && self.toggleFav('g:' + grp.id),
+      copyGroup,
+      favModels, favGroups, hasFavModels: favModels.length > 0, noFavModels: favModels.length === 0, hasFavGroups: favGroups.length > 0, noFavGroups: favGroups.length === 0,
+      favModelCount: favModels.length, favGroupCount: favGroups.length,
+      showFavModels: s.favTab === 'm', showFavGroups: s.favTab === 'g', favTabIsModels: s.favTab === 'm', favTabIsGroups: s.favTab === 'g',
+      ftm: { bg: s.favTab === 'm' ? '#fff' : 'transparent', color: s.favTab === 'm' ? '#0057B8' : '#475569' },
+      ftg: { bg: s.favTab === 'g' ? '#fff' : 'transparent', color: s.favTab === 'g' ? '#0057B8' : '#475569' },
+      favTabModels: () => self.setState({ favTab: 'm' }), favTabGroups: () => self.setState({ favTab: 'g' }),
+      histItems, hasHist: s.hist.length > 0, noHist: s.hist.length === 0, histCount: s.hist.length,
+      askClear: () => self.setState({ sheet: 'clear' }),
+      confirmClear: () => { self.setState({ hist: [], sheet: null }); self.say('History cleared'); },
+      nav: { home: navStyle(scr === 'home'), favs: navStyle(scr === 'favorites'), hist: navStyle(scr === 'history'), set: navStyle(scr === 'settings') },
+      swBg: s.offline ? '#0057B8' : '#94A3B8', swLeft: s.offline ? '23px' : '3px',
+      toggleOffline: () => { self.setState({ offline: !s.offline }); self.say(s.offline ? 'Back online' : 'Offline. Search still works.'); },
+      legalToast: () => self.say('Prototype: link not configured yet'),
+      ui, scenarios, checkUpdates: () => self.checkUpdates(), downloadUpdate: () => self.downloadUpdate(), resetUpd: () => self.setState({ upd: 'idle' }),
+      faqs,
+      sheetOpen: !!s.sheet, sheetReport: s.sheet === 'report', sheetClear: s.sheet === 'clear',
+      closeSheet: () => { if (s.rStatus === 'submitting') return; self.setState({ sheet: null, rStatus: s.rStatus === 'success' ? 'idle' : s.rStatus }); },
+      doneReport: () => { self.setState({ sheet: null, rStatus: 'idle', rText: '', rType: '', rAffected: '', rTouched: false }); self.say('Report recorded (prototype only)'); },
+      rTypes, rModel: cur ? cur.name : (s.query.trim() || 'Not specified'), rGroup: grp ? grp.ref : 'Not specified',
+      rAffected: s.rAffected, rText: s.rText, rCount: s.rText.length,
+      onAffected: e => self.setState({ rAffected: e.target.value.slice(0, 80) }),
+      onDesc: e => self.setState({ rText: e.target.value.slice(0, 500), rTouched: true }),
+      rDescError: descErr ? 'Add at least 10 characters.' : '', rDescBorder: descErr ? '#B42318' : '#B8C4D4',
+      rDisabled: !s.rType || rLen < 10 || busy || s.offline,
+      rBtnLabel: busy ? 'Submitting…' : (s.rStatus === 'error' ? 'Retry submit' : 'Submit report'),
+      rIsSuccess: s.rStatus === 'success', rShowForm: s.rStatus !== 'success', rIsError: s.rStatus === 'error', rSimFail: s.rSimFail,
+      toggleSimFail: () => self.setState({ rSimFail: !s.rSimFail }),
+      submitReport: () => self.submitReport(),
+      reportMissingModel: () => self.openReport('Missing phone model', s.query.trim()),
+      reportFromResults: () => self.openReport('', ''),
+      reportMissingGroup: () => self.openReport('Missing compatible model', ''),
+      reportFromGroup: () => self.openReport('Incorrect compatibility listing', ''),
+      reportFromSettings: () => self.openReport('Other issue', ''),
+      hasToast: !!s.toast, toast: s.toast, toastBottom: showNav ? 84 : 20
+    };
+  }
+}
+
+comp=new Component({});render();if(comp.componentDidMount)comp.componentDidMount();
+
+</script>
+</body>
+</html>
